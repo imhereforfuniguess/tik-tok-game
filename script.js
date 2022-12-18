@@ -8,22 +8,21 @@ gameBoard = {
     }
 }
 
-player = {
-    // Change player every click
-}
-
-gameState = {
-    turn: 1,
-    changeTurn: () => {
-        if (turn == 1){
-            turn = 2
-        } 
-        if (turn == 2){
-            turn = 1
+const gameState = (function () {
+    let currentPlayer = 1
+    const changeTurn = () => {
+        if (currentPlayer == 1){
+            currentPlayer = 2
+        } else {
+            currentPlayer = 1
         }
+        return currentPlayer
     }
+    return {changeTurn}
     // I don't know what to do here
-}
+})()
+
+const {changeTurn} = gameState
 
 gameBoard.updateBoard()
 
