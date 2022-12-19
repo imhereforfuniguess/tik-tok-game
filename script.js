@@ -11,7 +11,6 @@ const gameBoard = (function () {
     }
     updateBoard()
 
-
     // Add clicking
     // Implement clicking based on game state
     cell = document.querySelectorAll(".cell")
@@ -27,7 +26,6 @@ const gameBoard = (function () {
     })
 
     return {board}
-
 })()
 
 const gameState = (function () {
@@ -80,9 +78,15 @@ const gameState = (function () {
             checkSum += gameBoard.board[i] * gameBoard.board[i] - 3
         }
         compareCheckSum() 
+
+        checkForDraw()
     }
 
-
+    const checkForDraw = () => {
+        if (gameBoard.board.includes(0) == false){
+            console.log("DRAW")
+        }
+    }
 
     return {changeTurn, currentPlayer, checkForWin}
 })()
