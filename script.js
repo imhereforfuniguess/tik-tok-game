@@ -1,3 +1,15 @@
+const displayControl = (function () {
+    let playerName1 = document.getElementById("player1");
+    let playerName2 = document.getElementById("player2");
+    let submitButton = document.querySelector('#submitButton')
+    submitButton.addEventListener('click', () =>{
+        console.log(`player1 name:${playerName1.value}`)
+        console.log(`player2 name:${playerName2.value}`)
+    })
+})()
+
+
+
 const gameBoard = (function () {
     // Board array
     const board = [0,0,0,0,0,0,0,0,0]
@@ -32,7 +44,7 @@ const gameState = (function () {
     // Have to start from opposite player cause you change even at first turn
     let currentPlayer = 2
 
-    // Change player
+    // Change player update interface to reflect that
     const changeTurn = () => {
         if (currentPlayer == 1){
             currentPlayer = 2
