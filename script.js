@@ -1,34 +1,35 @@
 const gameBoard = (function () {
-    const board = [1,2,1,1,2,1,1,0,1]
+    
+    // Board array
+    const board = [0,0,0,0,0,0,0,1,2]
+
+    // Updates based on array
     const updateBoard =  () => {
         for (let i = 0; i < 9; i++){
             let cell = document.querySelector(`[data-cell="${i}"]`)
             cell.textContent = board[i]
         }
     }
+    updateBoard()
 
+    // Add clicking
+    // Implement clicking based on game state
     cell = document.querySelectorAll(".cell")
     cell.forEach((cell) => {
         cell.addEventListener('click', () => {
-            console.log(cell.getAttribute('data-cell'))
             if (cell.textContent == 0){
-                board[cell.getAttribute('data-cell')] = 1 
+                board[cell.getAttribute('data-cell')] = gameState.changeTurn()
             }
-            if (cell.textContent == 1){
-                board[cell.getAttribute('data-cell')] = 2 
-            }
-            if (cell.textContent == 2){
-                board[cell.getAttribute('data-cell')] = 1 
-            }
+            console.log()
+            
             updateBoard()
         })
     })
 
-    return {updateBoard}
 })()
 
 const gameState = (function () {
-    let currentPlayer = 1
+    let currentPlayer = 2
     const changeTurn = () => {
         if (currentPlayer == 1){
             currentPlayer = 2
@@ -37,12 +38,10 @@ const gameState = (function () {
         }
         return currentPlayer
     }
-    return {changeTurn}
+    return {changeTurn, currentPlayer}
+
     // I don't know what to do here
 })()
 
-const {changeTurn} = gameState
-
-gameBoard.updateBoard()
 
     
