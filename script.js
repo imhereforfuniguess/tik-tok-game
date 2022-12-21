@@ -1,9 +1,8 @@
 // To-do
-// make name disappear on submission
-// add who's turn is it
-// add prompt with 2 buttons who's gonna go first
-// 
-//  
+// Game over function
+const statusPanel = document.querySelector('[data-panel="statusDisplay"]')
+let isFirstNameFirst = 0
+
 
 const displayControl = (function () {
 
@@ -12,21 +11,26 @@ const displayControl = (function () {
         const versus = document.createElement('div')
         if (e.textContent == playerName1.value){
             versus.textContent = `${e.textContent} vs ${playerName2.value}`
+            isFirstNameFirst = 1
         } else {
             versus.textContent = `${e.textContent} vs ${playerName1.value}`
         }
         statusPanel.appendChild(versus)
-        displayTurn()
-
+        displayTurn(e.textContent)
     }
 
-    displayTurn = () => {
-        const displayTurn = document.createElement('div')
-        displayTurn.textContent = `it's ${playerName2.value}'s turn`
-        statusPanel.appendChild(displayTurn)
+    displayTurn = (name) => {
+        displayTurnDiv.textContent = `it's ${name}'s turn`
+        statusPanel.appendChild(displayTurnDiv)
     }
 
-    const statusPanel = document.querySelector('[data-panel="statusDisplay"]')
+    displayGameEnd = (message) => {
+        const gameEndMessage = document.createElement('div')
+        gameEndMessage.textContent = message
+        statusPanel.appendChild(gameEndMessage)
+    }
+
+    const displayTurnDiv = document.createElement('div')
 
     let playerName1 = document.getElementById("player1");
     let playerName2 = document.getElementById("player2");
@@ -42,8 +46,6 @@ const displayControl = (function () {
         })
         submitButton.remove()
 
-
-
         const turnPrompt = document.createElement('div')
         const turnSelector1 = document.createElement('button')
         const turnSelector2 = document.createElement('button')
@@ -56,10 +58,8 @@ const displayControl = (function () {
         statusPanel.appendChild(turnSelector1)
         statusPanel.appendChild(turnSelector2)
 
-
         const turnSelectors = document.querySelectorAll('[data-button="turnSelector"]')
         turnSelectors.forEach((e) => {
-            console.log(e.textContent)
             e.addEventListener('click', () =>{
                 displayVersusPrompt(e)
                 turnSelector2.remove()
@@ -67,18 +67,11 @@ const displayControl = (function () {
                 turnPrompt.remove()
             })
         })
-
-        const setTurn = function (player) {
-            console.log(player)
-        }
-
-
-
     })
 
-
+    
+    return{displayTurn, playerName1, playerName2, displayGameEnd, displayVersusPrompt, isFirstNameFirst}
 })()
-
 
 
 const gameBoard = (function () {
@@ -111,17 +104,32 @@ const gameBoard = (function () {
     return {board}
 })()
 
+
+
 const gameState = (function () {
     // Have to start from opposite player cause you change even at first turn
-    let currentPlayer = 2
+    let currentPlayer = 0
 
     // Change player update interface to reflect that
     const changeTurn = () => {
-        if (currentPlayer == 1){
+        console.log(`current player before${currentPlayer}`)
+        console.log(isFirstNameFirst)
+
+        if (currentPlayer === 1){
             currentPlayer = 2
-        } else {
+        }
+        else if (currentPlayer === 2){
             currentPlayer = 1
         }
+        else if (currentPlayer === 0 && isFirstNameFirst == 0){
+            currentPlayer = 1
+        }
+        else if (currentPlayer === 0 && isFirstNameFirst == 1){
+            currentPlayer = 2
+        }
+
+        console.log(`current player after${currentPlayer}`)
+        displayTurn(displayControl[`playerName${currentPlayer}`].value)
         return currentPlayer
     }
 
@@ -132,10 +140,10 @@ const gameState = (function () {
         // Compares sums to 
         const compareCheckSum = () => {
             if (checkSum == 3){
-                console.log(`player 2 wins`)
+                displayControl.displayGameEnd(`${displayControl.playerName1.value} wins`)
             }
             if (checkSum == -6){
-                console.log(`player 1 wins`)
+                displayControl.displayGameEnd(`${displayControl.playerName2.value} wins`)
             }
             checkSum = 0
         }
