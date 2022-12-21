@@ -1,11 +1,82 @@
+// To-do
+// make name disappear on submission
+// add who's turn is it
+// add prompt with 2 buttons who's gonna go first
+// 
+//  
+
 const displayControl = (function () {
+
+
+    displayVersusPrompt = (e) => {
+        const versus = document.createElement('div')
+        if (e.textContent == playerName1.value){
+            versus.textContent = `${e.textContent} vs ${playerName2.value}`
+        } else {
+            versus.textContent = `${e.textContent} vs ${playerName1.value}`
+        }
+        statusPanel.appendChild(versus)
+        displayTurn()
+
+    }
+
+    displayTurn = () => {
+        const displayTurn = document.createElement('div')
+        displayTurn.textContent = `it's ${playerName2.value}'s turn`
+        statusPanel.appendChild(displayTurn)
+    }
+
+    const statusPanel = document.querySelector('[data-panel="statusDisplay"]')
+
     let playerName1 = document.getElementById("player1");
     let playerName2 = document.getElementById("player2");
+    let label = document.querySelectorAll("label")
     let submitButton = document.querySelector('#submitButton')
     submitButton.addEventListener('click', () =>{
-        console.log(`player1 name:${playerName1.value}`)
-        console.log(`player2 name:${playerName2.value}`)
+        playerName1.remove()
+        playerName2.remove()
+        
+        // Remove player labels
+        label.forEach((e) => {
+            e.remove()
+        })
+        submitButton.remove()
+
+
+
+        const turnPrompt = document.createElement('div')
+        const turnSelector1 = document.createElement('button')
+        const turnSelector2 = document.createElement('button')
+        turnSelector1.setAttribute("data-button","turnSelector")
+        turnSelector2.setAttribute("data-button","turnSelector")
+        turnSelector1.textContent = `${playerName1.value}`
+        turnSelector2.textContent = `${playerName2.value}`
+        turnPrompt.textContent = "who goes first?"
+        statusPanel.appendChild(turnPrompt)
+        statusPanel.appendChild(turnSelector1)
+        statusPanel.appendChild(turnSelector2)
+
+
+        const turnSelectors = document.querySelectorAll('[data-button="turnSelector"]')
+        turnSelectors.forEach((e) => {
+            console.log(e.textContent)
+            e.addEventListener('click', () =>{
+                displayVersusPrompt(e)
+                turnSelector2.remove()
+                turnSelector1.remove()
+                turnPrompt.remove()
+            })
+        })
+
+        const setTurn = function (player) {
+            console.log(player)
+        }
+
+
+
     })
+
+
 })()
 
 
