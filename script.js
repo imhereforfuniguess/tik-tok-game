@@ -3,6 +3,7 @@
 const statusPanel = document.querySelector('[data-panel="statusDisplay"]');
 let isFirstNameFirst = 0;
 let isGameActive = 1;
+let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 
 const displayControl = (() => {
@@ -75,7 +76,6 @@ const displayControl = (() => {
 
 const gameBoard = (function () {
   // Board array
-  const board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   // Updates based on array
   const updateBoard = () => {
@@ -99,7 +99,7 @@ const gameBoard = (function () {
     });
   });
 
-  return { board };
+  return { board, updateBoard };
 }());
 
 const gameState = (function () {
@@ -175,6 +175,18 @@ const gameState = (function () {
       isGameActive = 0
     }
   };
+
+  const resetButton = document.querySelector('[data-button="reset"]')
+  resetButton.addEventListener('click', () => {
+    resetGame()
+  })
+
+
+  const resetGame = () => {
+    board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    gameBoard.updateBoard();
+  }
+
 
   return { changeTurn, currentPlayer, checkForWin };
 }());
