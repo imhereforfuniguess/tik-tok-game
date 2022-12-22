@@ -2,12 +2,13 @@
 // Game over function
 const statusPanel = document.querySelector('[data-panel="statusDisplay"]');
 let isFirstNameFirst = 0;
+let isGameActive = 1;
 
-const displayControl = () => {
 
+const displayControl = (() => {
   const displayVersusPrompt = (e) => {
     const versus = document.createElement('div');
-    if (e.textContent == playerName1.value) {
+    if (e.textContent === playerName1.value) {
       versus.textContent = `${e.textContent} vs ${playerName2.value}`;
       isFirstNameFirst = 1;
     } else {
@@ -16,7 +17,6 @@ const displayControl = () => {
     statusPanel.appendChild(versus);
     displayTurn(e.textContent);
   };
-
 
   displayTurn = (name) => {
     displayTurnDiv.textContent = `it's ${name}gi's turn`;
@@ -71,7 +71,7 @@ const displayControl = () => {
   return {
     displayTurn, playerName1, playerName2, displayGameEnd, displayVersusPrompt, isFirstNameFirst,
   };
-}();
+})();
 
 const gameBoard = (function () {
   // Board array
@@ -91,7 +91,7 @@ const gameBoard = (function () {
   cell = document.querySelectorAll('.cell');
   cell.forEach((cell) => {
     cell.addEventListener('click', () => {
-      if (cell.textContent == 0) {
+      if (cell.textContent == 0 && isGameActive === 1) {
         board[cell.getAttribute('data-cell')] = gameState.changeTurn();
         gameState.checkForWin();
       }
@@ -105,6 +105,7 @@ const gameBoard = (function () {
 const gameState = (function () {
   // Have to start from opposite player cause you change even at first turn
   let currentPlayer = 0;
+
 
   // Change player update interface to reflect that
   const changeTurn = () => {
@@ -134,9 +135,11 @@ const gameState = (function () {
     const compareCheckSum = () => {
       if (checkSum == 3) {
         displayControl.displayGameEnd(`${displayControl.playerName1.value} wins`);
+        isGameActive = 0;
       }
       if (checkSum == -6) {
         displayControl.displayGameEnd(`${displayControl.playerName2.value} wins`);
+        isGameActive = 0;
       }
       checkSum = 0;
     };
@@ -169,6 +172,7 @@ const gameState = (function () {
   const checkForDraw = () => {
     if (gameBoard.board.includes(0) == false) {
       console.log('DRAW');
+      isGameActive = 0
     }
   };
 
