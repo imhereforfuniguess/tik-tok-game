@@ -1,9 +1,11 @@
 // To-do
 // Game over function
+
+
 const statusPanel = document.querySelector('[data-panel="statusDisplay"]');
 let isFirstNameFirst = 0;
 let isGameActive = 1;
-let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+let board = [0, 1, 0, 0, 0, 0, 0, 0, 0];
 
 
 const displayControl = (() => {
@@ -80,8 +82,20 @@ const gameBoard = (function () {
   // Updates based on array
   const updateBoard = () => {
     for (let i = 0; i < 9; i++) {
-      const cell = document.querySelector(`[data-cell="${i}"]`);
+      const cell = document.querySelector(`[data-cell="${i}"].cell`);
       cell.textContent = board[i];
+
+      const cellDisplay = document.querySelector(`[data-cell="${i}"].cellDisplay`)
+      if (board[i] === 1) {
+        cellDisplay.textContent = "X"
+      }
+      if (board[i] === 2) {
+        cellDisplay.textContent = "O"
+      }
+
+      if (board[i] === 0) {
+        cellDisplay.textContent = ""
+      }
     }
   };
   updateBoard();
@@ -109,8 +123,6 @@ const gameState = (function () {
 
   // Change player update interface to reflect that
   const changeTurn = () => {
-    console.log(`current player before${currentPlayer}`);
-    console.log(isFirstNameFirst);
 
     if (currentPlayer === 1) {
       currentPlayer = 2;
@@ -122,7 +134,6 @@ const gameState = (function () {
       currentPlayer = 2;
     }
 
-    console.log(`current player after${currentPlayer}`);
     displayTurn(displayControl[`playerName${currentPlayer}`].value);
     return currentPlayer;
   };
@@ -185,6 +196,10 @@ const gameState = (function () {
   const resetGame = () => {
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     gameBoard.updateBoard();
+    isGameActive = 1;
+    checkSum = 0
+
+    // reset board and reset all the labels
   }
 
 
