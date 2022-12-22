@@ -5,7 +5,8 @@
 const statusPanel = document.querySelector('[data-panel="statusDisplay"]');
 let isFirstNameFirst = 0;
 let isGameActive = 1;
-let board = [0, 1, 0, 0, 0, 0, 0, 0, 0];
+let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+let checkSum = 0;
 
 
 const displayControl = (() => {
@@ -138,12 +139,14 @@ const gameState = (function () {
     return currentPlayer;
   };
 
+
+
   // Win / Draw check
   const checkForWin = () => {
-    let checkSum = 0;
 
     // Compares sums to
     const compareCheckSum = () => {
+      console.log(checkSum)
       if (checkSum == 3) {
         displayControl.displayGameEnd(`${displayControl.playerName1.value} wins`);
         isGameActive = 0;
@@ -158,22 +161,22 @@ const gameState = (function () {
     // Check who wins rows and columns
     for (let i = 0; i < 9; i += 3) {
       for (let j = 0; j < 3; j++) {
-        checkSum += gameBoard.board[i + j] * gameBoard.board[i + j] - 3;
+        checkSum += board[i + j] * board[i + j] - 3;
       }
       compareCheckSum();
       for (let j = 0; j < 3; j++) {
-        checkSum += gameBoard.board[i / 3 + j * 3] * gameBoard.board[i / 3 + j * 3] - 3;
+        checkSum += board[i / 3 + j * 3] * board[i / 3 + j * 3] - 3;
       }
       compareCheckSum();
     }
 
     // Check who wins diagonals
     for (let i = 0; i < 9; i += 4) {
-      checkSum += gameBoard.board[i] * gameBoard.board[i] - 3;
+      checkSum += board[i] * board[i] - 3;
     }
     compareCheckSum();
     for (let i = 2; i < 8; i += 2) {
-      checkSum += gameBoard.board[i] * gameBoard.board[i] - 3;
+      checkSum += board[i] * board[i] - 3;
     }
     compareCheckSum();
 
@@ -181,7 +184,7 @@ const gameState = (function () {
   };
 
   const checkForDraw = () => {
-    if (gameBoard.board.includes(0) == false) {
+    if (board.includes(0) == false) {
       console.log('DRAW');
       isGameActive = 0
     }
