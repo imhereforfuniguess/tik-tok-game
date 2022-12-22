@@ -19,7 +19,7 @@ const displayControl = () => {
 
 
   displayTurn = (name) => {
-    displayTurnDiv.textContent = `it's ${name}'s turn`;
+    displayTurnDiv.textContent = `it's ${name}gi's turn`;
     statusPanel.appendChild(displayTurnDiv);
   };
 
@@ -71,7 +71,7 @@ const displayControl = () => {
   return {
     displayTurn, playerName1, playerName2, displayGameEnd, displayVersusPrompt, isFirstNameFirst,
   };
-}());
+}();
 
 const gameBoard = (function () {
   // Board array
