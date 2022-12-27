@@ -1,5 +1,6 @@
 // To-do
 // Game over function
+// Spawn 
 
 
 const statusPanel = document.querySelector('[data-panel="statusDisplay"]');
@@ -80,6 +81,29 @@ const displayControl = (() => {
 const gameBoard = (function () {
   // Board array
 
+  const spawnBoard = () => {
+    const gameBoardDisplay = document.querySelector('[data-div="gameBoardDisplay"]')
+
+    for (let i = 0; i < 9; i++){
+      const cellDisplay = document.createElement('div')
+      cellDisplay.setAttribute('class','cellDisplay')
+      cellDisplay.setAttribute('data-cell', i)
+      gameBoardDisplay.appendChild(cellDisplay)
+    }
+
+    const gameBoard = document.createElement('div')
+    gameBoard.setAttribute('data-div','gameBoard')
+    gameBoardDisplay.appendChild(gameBoard)
+
+    for (let i = 0; i < 9; i++){
+      const cellDisplay = document.createElement('div')
+      cellDisplay.setAttribute('class','cell')
+      cellDisplay.setAttribute('data-cell', i)
+      gameBoard.appendChild(cellDisplay)
+    }
+  }
+  spawnBoard()
+
   // Updates based on array
   const updateBoard = () => {
     for (let i = 0; i < 9; i++) {
@@ -101,6 +125,8 @@ const gameBoard = (function () {
   };
   updateBoard();
 
+
+
   // Add clicking
   // Implement clicking based on game state
   cell = document.querySelectorAll('.cell');
@@ -114,7 +140,7 @@ const gameBoard = (function () {
     });
   });
 
-  return { board, updateBoard };
+  return { board, updateBoard, spawnBoard};
 }());
 
 const gameState = (function () {
@@ -208,3 +234,4 @@ const gameState = (function () {
 
   return { changeTurn, currentPlayer, checkForWin };
 }());
+
