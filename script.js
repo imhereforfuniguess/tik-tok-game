@@ -40,6 +40,7 @@ const displayControl = (() => {
   let playerName2 = document.getElementById('player2');
   const label = document.querySelectorAll('label');
   const submitButton = document.querySelector('#submitButton');
+  
   submitButton.addEventListener('click', () => {
     playerName1.remove();
     playerName2.remove();
@@ -69,6 +70,7 @@ const displayControl = (() => {
         turnSelector2.remove();
         turnSelector1.remove();
         turnPrompt.remove();
+        spawnBoard()
       });
     });
   });
@@ -79,8 +81,8 @@ const displayControl = (() => {
 })();
 
 const gameBoard = (function () {
-  // Board array
 
+  // Spawns board based on array
   const spawnBoard = () => {
     const gameBoardDisplay = document.querySelector('[data-div="gameBoardDisplay"]')
 
@@ -102,7 +104,7 @@ const gameBoard = (function () {
       gameBoard.appendChild(cellDisplay)
     }
   }
-  spawnBoard()
+  
 
   // Updates based on array
   const updateBoard = () => {
@@ -123,13 +125,15 @@ const gameBoard = (function () {
       }
     }
   };
-  updateBoard();
+  // updateBoard();
 
 
 
   // Add clicking
   // Implement clicking based on game state
   cell = document.querySelectorAll('.cell');
+  
+  // Cells react to clicks
   cell.forEach((cell) => {
     cell.addEventListener('click', () => {
       if (cell.textContent == 0 && isGameActive === 1) {
@@ -164,7 +168,6 @@ const gameState = (function () {
     displayTurn(displayControl[`playerName${currentPlayer}`].value);
     return currentPlayer;
   };
-
 
 
   // Win / Draw check
@@ -221,7 +224,6 @@ const gameState = (function () {
     resetGame()
   })
 
-
   const resetGame = () => {
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     gameBoard.updateBoard();
@@ -231,7 +233,7 @@ const gameState = (function () {
     // reset board and reset all the labels
   }
 
-
   return { changeTurn, currentPlayer, checkForWin };
 }());
 
+const {spawnBoard} = gameBoard
