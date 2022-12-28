@@ -23,7 +23,6 @@ const displayControl = (() => {
     displayTurn(e.textContent);
   };
 
-
   const spawnResetButton = () => {
 
     const resetGameButton = document.createElement('button')
@@ -38,7 +37,6 @@ const displayControl = (() => {
     })
   }
   
-
   displayTurn = (name) => {
     displayTurnDiv.textContent = `it's ${name}gi's turn`;
     statusPanel.appendChild(displayTurnDiv);
@@ -93,7 +91,12 @@ const displayControl = (() => {
   });
 
   return {
-    displayTurn, playerName1, playerName2, displayGameEnd, displayVersusPrompt, isFirstNameFirst,
+    displayTurn, 
+    playerName1, 
+    playerName2, 
+    displayGameEnd, 
+    displayVersusPrompt, 
+    isFirstNameFirst,
   };
 })();
 
@@ -122,6 +125,7 @@ const gameBoard = (function () {
     }
 
     updateBoard();
+    assignCellsEvents()
   }
   
   // Updates based on array
@@ -146,20 +150,26 @@ const gameBoard = (function () {
 
   // Add clicking
   // Implement clicking based on game state
-  cell = document.querySelectorAll('.cell');
-  
-  // Cells react to clicks
-  cell.forEach((cell) => {
-    cell.addEventListener('click', () => {
-      if (cell.textContent == 0 && isGameActive === 1) {
-        board[cell.getAttribute('data-cell')] = gameState.changeTurn();
-        gameState.checkForWin();
-      }
-      updateBoard();
+  const assignCellsEvents = () => {
+    cell = document.querySelectorAll('.cell');
+    cell.forEach((cell) => {
+      cell.addEventListener('click', () => {
+        if (cell.textContent == 0 && isGameActive === 1) {
+          board[cell.getAttribute('data-cell')] = gameState.changeTurn();
+          gameState.checkForWin();
+        }
+        updateBoard();
+      });
     });
-  });
+  }
 
-  return { board, updateBoard, spawnBoard};
+  return { 
+    board, 
+    updateBoard, 
+    spawnBoard,
+    assignCellsEvents
+  };
+
 }());
 
 const gameState = (function () {
@@ -249,3 +259,4 @@ const gameState = (function () {
 
 const {resetGame} = gameState
 const {spawnBoard} = gameBoard
+const {assignCellsEvents} = gameBoard
