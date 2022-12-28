@@ -23,6 +23,22 @@ const displayControl = (() => {
     displayTurn(e.textContent);
   };
 
+
+  const spawnResetButton = () => {
+
+    const resetGameButton = document.createElement('button')
+    resetGameButton.setAttribute('data-button','reset')
+    resetGameButton.textContent = 'Reset Game'
+
+    const statusDisplay = document.querySelector('[data-panel="statusDisplay"]')
+    statusDisplay.appendChild(resetGameButton)
+
+    resetGameButton.addEventListener('click', () => {
+      resetGame()
+    })
+  }
+  
+
   displayTurn = (name) => {
     displayTurnDiv.textContent = `it's ${name}gi's turn`;
     statusPanel.appendChild(displayTurnDiv);
@@ -71,6 +87,7 @@ const displayControl = (() => {
         turnSelector1.remove();
         turnPrompt.remove();
         spawnBoard()
+        spawnResetButton()
       });
     });
   });
@@ -103,9 +120,10 @@ const gameBoard = (function () {
       cellDisplay.setAttribute('data-cell', i)
       gameBoard.appendChild(cellDisplay)
     }
+
+    updateBoard();
   }
   
-
   // Updates based on array
   const updateBoard = () => {
     for (let i = 0; i < 9; i++) {
@@ -125,9 +143,6 @@ const gameBoard = (function () {
       }
     }
   };
-  // updateBoard();
-
-
 
   // Add clicking
   // Implement clicking based on game state
@@ -219,10 +234,6 @@ const gameState = (function () {
     }
   };
 
-  const resetButton = document.querySelector('[data-button="reset"]')
-  resetButton.addEventListener('click', () => {
-    resetGame()
-  })
 
   const resetGame = () => {
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -233,7 +244,8 @@ const gameState = (function () {
     // reset board and reset all the labels
   }
 
-  return { changeTurn, currentPlayer, checkForWin };
+  return { changeTurn, currentPlayer, checkForWin, resetGame};
 }());
 
+const {resetGame} = gameState
 const {spawnBoard} = gameBoard
