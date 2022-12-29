@@ -1,6 +1,4 @@
-// To-do
-// Game over function
-// Spawn 
+// Make reset game come back to player promts
 
 
 const statusPanel = document.querySelector('[data-panel="statusDisplay"]');
@@ -36,9 +34,27 @@ const displayControl = (() => {
       resetGame()
     })
   }
+
+  const spawnInputFields = () => {
+    const player1Label = document.createElement('label')
+    const player1Input = document.createElement('input')
+    const player2Label = document.createElement('label')
+    const player2Input = document.createElement('input')
+    const inputForm = document.querySelector('form')
+
+    player1Label.textContent = "player1:"
+    player2Label.textContent = "player2:"
+
+    inputForm.appendChild(player1Label)
+    inputForm.appendChild(player1Input)
+    inputForm.appendChild(player2Label)
+    inputForm.appendChild(player2Input)
+  }
+
+  spawnInputFields()
   
   displayTurn = (name) => {
-    displayTurnDiv.textContent = `it's ${name}gi's turn`;
+    displayTurnDiv.textContent = `it's ${name}'s turn`;
     statusPanel.appendChild(displayTurnDiv);
   };
 
