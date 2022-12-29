@@ -51,6 +51,19 @@ const displayControl = (() => {
     inputForm.appendChild(player2Input)
   }
 
+  const spawnInputButton = () => {
+    const inputButton = document.createElement('button')
+    const inputButtonHolder = document.querySelector('.buttonHolder')
+
+    inputButton.textContent = "Submit"
+    inputButton.setAttribute('type','submit')
+    inputButton.setAttribute('id','submitButton')
+
+    inputButtonHolder.appendChild(inputButton)
+
+  }
+  spawnInputButton()
+
   spawnInputFields()
   
   displayTurn = (name) => {
