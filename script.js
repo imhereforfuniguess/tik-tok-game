@@ -45,6 +45,16 @@ const displayControl = (() => {
     player1Label.textContent = "player1:"
     player2Label.textContent = "player2:"
 
+    player1Label.setAttribute('for','player1')
+    player2Label.setAttribute('for','player2')
+
+    player1Input.setAttribute('type','text')
+    player1Input.setAttribute('id','player1')
+    player1Input.setAttribute('name','player1')
+    player2Input.setAttribute('type','text')
+    player2Input.setAttribute('id','player2')
+    player2Input.setAttribute('name','player2')
+
     inputForm.appendChild(player1Label)
     inputForm.appendChild(player1Input)
     inputForm.appendChild(player2Label)
