@@ -166,7 +166,7 @@ const gameBoard = (function gameBoard() {
     const cell = document.querySelectorAll('.cell');
     cell.forEach((e) => {
       e.addEventListener('click', () => {
-        if (e.textContent === 0 && isGameActive === 1) {
+        if (e.textContent === '0' && isGameActive === 1) {
           board[e.getAttribute('data-cell')] = gameState.changeTurn();
           gameState.checkForWin();
         }
@@ -204,7 +204,6 @@ const gameBoard = (function gameBoard() {
   };
 
   return {
-    board,
     updateBoard,
     spawnBoard,
     assignCellsEvents,
