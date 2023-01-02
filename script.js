@@ -87,12 +87,9 @@ const displayControl = (function displayControl() {
 
   const displayVersusScore = () => {
     const versusScore = document.createElement('div');
+    versusScore.setAttribute('class', 'scoreBoard');
     statusPanel.appendChild(versusScore);
-    const displayVersusScoreUpdate = () => {
-      versusScore.textContent = `${player1Score}:${player2Score}`;
-    };
-    displayVersusScoreUpdate();
-    return { displayVersusScoreUpdate };
+    versusScore.textContent = `${player1Score}:${player2Score}`;
   };
 
   const displayGameEnd = (message) => {
@@ -147,8 +144,11 @@ const displayControl = (function displayControl() {
     displayGameEnd,
     displayVersusPrompt: displayVersusNames,
     isFirstNameFirst,
+    displayVersusScore,
   };
 }());
+
+const { displayVersusScore } = displayControl;
 
 const gameBoard = (function gameBoard() {
   // Updates based on array
@@ -228,6 +228,10 @@ const { spawnBoard } = gameBoard;
 const { displayTurn } = displayControl;
 
 const gameState = (function gameState() {
+  const displayVersusScoreUpdate = () => {
+    const versusScore = document.querySelector('.scoreBoard');
+    versusScore.textContent = `${player1Score}:${player2Score}`;
+  };
   // Have to start from opposite player cause you change even at first turn
   let currentPlayer = 0;
 
@@ -263,7 +267,7 @@ const gameState = (function gameState() {
         );
         player1Score += 1;
         isGameActive = 0;
-        displayControl.displayVersusScoreUpdate();
+        displayVersusScoreUpdate();
       }
       if (checkSum === -6) {
         displayControl.displayGameEnd(
@@ -271,7 +275,7 @@ const gameState = (function gameState() {
         );
         player2Score += 1;
         isGameActive = 0;
-        displayControl.displayVersusScoreUpdate();
+        displayVersusScoreUpdate();
       }
       checkSum = 0;
     };
