@@ -5,6 +5,8 @@ let isFirstNameFirst = 0;
 let isGameActive = 1;
 let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 let checkSum = 0;
+let player1Score = 0;
+let player2Score = 0;
 
 const displayControl = (function displayControl() {
   const spawnResetBoardButton = () => {
@@ -71,7 +73,7 @@ const displayControl = (function displayControl() {
   const playerName2 = document.getElementById('player2');
   const label = document.querySelectorAll('label');
 
-  const displayVersusPrompt = (e) => {
+  const displayVersusNames = (e) => {
     const versus = document.createElement('div');
     if (e.textContent === playerName1.value) {
       versus.textContent = `${e.textContent} vs ${playerName2.value}`;
@@ -117,12 +119,13 @@ const displayControl = (function displayControl() {
     );
     turnSelectors.forEach((e) => {
       e.addEventListener('click', () => {
-        displayVersusPrompt(e);
+        displayVersusNames(e);
         turnSelector2.remove();
         turnSelector1.remove();
         turnPrompt.remove();
         spawnBoard();
         spawnResetBoardButton();
+        displayVersusScore();
       });
     });
   });
@@ -132,7 +135,7 @@ const displayControl = (function displayControl() {
     playerName1,
     playerName2,
     displayGameEnd,
-    displayVersusPrompt,
+    displayVersusPrompt: displayVersusNames,
     isFirstNameFirst,
   };
 }());
@@ -207,6 +210,7 @@ const gameBoard = (function gameBoard() {
     updateBoard,
     spawnBoard,
     assignCellsEvents,
+
   };
 }());
 
@@ -247,13 +251,17 @@ const gameState = (function gameState() {
         displayControl.displayGameEnd(
           `${displayControl.playerName1.value} wins`,
         );
+        player1Score += 1;
         isGameActive = 0;
+        displayControl.displayVersusScoreUpdate();
       }
       if (checkSum === -6) {
         displayControl.displayGameEnd(
           `${displayControl.playerName2.value} wins`,
         );
+        player2Score += 1;
         isGameActive = 0;
+        displayControl.displayVersusScoreUpdate();
       }
       checkSum = 0;
     };
