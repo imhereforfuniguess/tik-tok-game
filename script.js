@@ -85,6 +85,16 @@ const displayControl = (function displayControl() {
     displayTurn(e.textContent);
   };
 
+  const displayVersusScore = () => {
+    const versusScore = document.createElement('div');
+    statusPanel.appendChild(versusScore);
+    const displayVersusScoreUpdate = () => {
+      versusScore.textContent = `${player1Score}:${player2Score}`;
+    };
+    displayVersusScoreUpdate();
+    return { displayVersusScoreUpdate };
+  };
+
   const displayGameEnd = (message) => {
     const gameEndMessage = document.createElement('div');
     gameEndMessage.textContent = message;
