@@ -64,6 +64,14 @@ const displayControl = (function displayControl() {
   spawnInputFields();
   const displayTurnDiv = document.createElement('div');
 
+  const spawnNextRoundButton = () => {
+    const nextRoundButton = document.createElement('button');
+    const inputButtonHolder = document.querySelector('.buttonHolder');
+    nextRoundButton.textContent = 'Next Round';
+
+    inputButtonHolder.appendChild(nextRoundButton);
+  };
+
   const displayTurn = (name) => {
     displayTurnDiv.textContent = `it's ${name}'s turn`;
     statusPanel.appendChild(displayTurnDiv);
@@ -145,6 +153,7 @@ const displayControl = (function displayControl() {
     displayVersusPrompt: displayVersusNames,
     isFirstNameFirst,
     displayVersusScore,
+    spawnNextRoundButton,
   };
 }());
 
@@ -268,6 +277,7 @@ const gameState = (function gameState() {
         player1Score += 1;
         isGameActive = 0;
         displayVersusScoreUpdate();
+        displayControl.spawnNextRoundButton();
       }
       if (checkSum === -6) {
         displayControl.displayGameEnd(
@@ -276,6 +286,7 @@ const gameState = (function gameState() {
         player2Score += 1;
         isGameActive = 0;
         displayVersusScoreUpdate();
+        displayControl.spawnNextRoundButton();
       }
       checkSum = 0;
     };
