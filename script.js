@@ -70,6 +70,13 @@ const displayControl = (function displayControl() {
     nextRoundButton.textContent = 'Next Round';
 
     inputButtonHolder.appendChild(nextRoundButton);
+
+    nextRoundButton.addEventListener('click', () => {
+      board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+      gameBoard.updateBoard();
+      isGameActive = 1;
+      checkSum = 0;
+    });
   };
 
   const displayTurn = (name) => {
