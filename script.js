@@ -76,6 +76,7 @@ const displayControl = (function displayControl() {
       gameBoard.updateBoard();
       isGameActive = 1;
       checkSum = 0;
+      nextRoundButton.remove();
     });
   };
 
