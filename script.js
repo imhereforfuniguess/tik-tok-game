@@ -66,6 +66,7 @@ const displayControl = (function displayControl() {
 
   const spawnNextRoundButton = () => {
     const nextRoundButton = document.createElement('button');
+    nextRoundButton.setAttribute('class', 'nextRoundButton');
     const inputButtonHolder = document.querySelector('.buttonHolder');
     nextRoundButton.textContent = 'Next Round';
 
@@ -77,6 +78,7 @@ const displayControl = (function displayControl() {
       isGameActive = 1;
       checkSum = 0;
       nextRoundButton.remove();
+      displayControl.playerName1.remove();
     });
   };
 
@@ -109,9 +111,10 @@ const displayControl = (function displayControl() {
   };
 
   const displayGameEnd = (message) => {
-    const gameEndMessage = document.createElement('div');
-    gameEndMessage.textContent = message;
-    statusPanel.appendChild(gameEndMessage);
+    const roundEndMessage = document.createElement('div');
+    roundEndMessage.textContent = message;
+    roundEndMessage.setAttribute('class', 'roundEndMessage');
+    statusPanel.appendChild(roundEndMessage);
   };
 
   const submitButton = document.querySelector('#submitButton');
@@ -164,8 +167,6 @@ const displayControl = (function displayControl() {
     spawnNextRoundButton,
   };
 }());
-
-const { displayVersusScore } = displayControl;
 
 const gameBoard = (function gameBoard() {
   // Updates based on array
@@ -274,6 +275,13 @@ const gameState = (function gameState() {
     }
   };
 
+  const removeRoundEndText = () => {
+    const nextRoundButton = document.querySelector('.nextRoundButton');
+    nextRoundButton.addEventListener('click', () => {
+      const gameEndMessage = document.querySelector('.roundEndMessage');
+      gameEndMessage.remove();
+    });
+  };
   // Win / Draw check
   const checkForWin = () => {
     // Compares sums to
@@ -286,6 +294,7 @@ const gameState = (function gameState() {
         isGameActive = 0;
         displayVersusScoreUpdate();
         displayControl.spawnNextRoundButton();
+        removeRoundEndText();
       }
       if (checkSum === -6) {
         displayControl.displayGameEnd(
@@ -295,6 +304,7 @@ const gameState = (function gameState() {
         isGameActive = 0;
         displayVersusScoreUpdate();
         displayControl.spawnNextRoundButton();
+        removeRoundEndText();
       }
       checkSum = 0;
     };
