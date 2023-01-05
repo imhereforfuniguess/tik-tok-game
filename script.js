@@ -2,6 +2,7 @@
 
 const statusPanel = document.querySelector('[data-panel="statusDisplay"]');
 const turnPanel = document.querySelector('[data-panel="turnDisplay"]');
+const roundWinPanel = document.querySelector('[data-panel="roundWinDisplay"]');
 let isFirstNameFirst = 0;
 let isGameActive = 1;
 let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -115,7 +116,7 @@ const displayControl = (function displayControl() {
     const roundEndMessage = document.createElement('div');
     roundEndMessage.textContent = message;
     roundEndMessage.setAttribute('class', 'roundEndMessage');
-    statusPanel.appendChild(roundEndMessage);
+    roundWinPanel.appendChild(roundEndMessage);
   };
 
   const submitButton = document.querySelector('#submitButton');
