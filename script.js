@@ -14,7 +14,7 @@ const displayControl = (function displayControl() {
   const spawnResetBoardButton = () => {
     const resetGameButton = document.createElement('button');
     resetGameButton.setAttribute('data-button', 'reset');
-    resetGameButton.textContent = 'Reset board';
+    resetGameButton.textContent = 'New game';
 
     const statusDisplay = document.querySelector(
       '[data-panel="statusDisplay"]',
@@ -65,6 +65,7 @@ const displayControl = (function displayControl() {
   spawnInputButton();
   spawnInputFields();
   const displayTurnDiv = document.createElement('div');
+  displayTurnDiv.setAttribute('class', 'turnDisplay');
 
   const spawnNextRoundButton = () => {
     const nextRoundButton = document.createElement('button');
@@ -80,7 +81,6 @@ const displayControl = (function displayControl() {
       isGameActive = 1;
       checkSum = 0;
       nextRoundButton.remove();
-      displayControl.playerName1.remove();
     });
   };
 
@@ -95,6 +95,7 @@ const displayControl = (function displayControl() {
 
   const displayVersusNames = (e) => {
     const versus = document.createElement('div');
+    versus.setAttribute('class', 'versusNames');
     if (e.textContent === playerName1.value) {
       versus.textContent = `${e.textContent} vs ${playerName2.value}`;
       isFirstNameFirst = 1;
@@ -117,6 +118,21 @@ const displayControl = (function displayControl() {
     roundEndMessage.textContent = message;
     roundEndMessage.setAttribute('class', 'roundEndMessage');
     roundWinPanel.appendChild(roundEndMessage);
+  };
+
+  const deleteEverything = () => {
+    const versus = document.querySelector('.versusNames');
+    versus.remove();
+    const scoreBoard = document.querySelector('.scoreBoard');
+    scoreBoard.remove();
+    const turnDisplay = document.querySelector('.turnDisplay');
+    turnDisplay.remove();
+    const roundEndMessage = document.querySelector('.roundEndMessage');
+    roundEndMessage.remove();
+    const resetGameButton = document.querySelector('[data-button="reset"]');
+    resetGameButton.remove();
+    const nextRoundButton = document.querySelector('.nextRoundButton');
+    nextRoundButton.remove();
   };
 
   const submitButton = document.querySelector('#submitButton');
@@ -167,6 +183,8 @@ const displayControl = (function displayControl() {
     isFirstNameFirst,
     displayVersusScore,
     spawnNextRoundButton,
+    spawnInputFields,
+    deleteEverything,
   };
 }());
 
@@ -341,6 +359,8 @@ const gameState = (function gameState() {
     gameBoard.updateBoard();
     isGameActive = 1;
     checkSum = 0;
+    displayControl.spawnInputFields();
+    displayControl.deleteEverything();
 
     // reset board and reset all the labels
   };
