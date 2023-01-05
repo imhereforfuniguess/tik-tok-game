@@ -185,6 +185,7 @@ const displayControl = (function displayControl() {
     spawnNextRoundButton,
     spawnInputFields,
     deleteEverything,
+    spawnInputButton,
   };
 }());
 
@@ -361,6 +362,7 @@ const gameState = (function gameState() {
     checkSum = 0;
     displayControl.spawnInputFields();
     displayControl.deleteEverything();
+    displayControl.spawnInputButton();
 
     // reset board and reset all the labels
   };
