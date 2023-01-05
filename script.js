@@ -1,6 +1,7 @@
 // Make reset game come back to player promts
 
 const statusPanel = document.querySelector('[data-panel="statusDisplay"]');
+const turnPanel = document.querySelector('[data-panel="turnDisplay"]');
 let isFirstNameFirst = 0;
 let isGameActive = 1;
 let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -84,7 +85,7 @@ const displayControl = (function displayControl() {
 
   const displayTurn = (name) => {
     displayTurnDiv.textContent = `it's ${name}'s turn`;
-    statusPanel.appendChild(displayTurnDiv);
+    turnPanel.appendChild(displayTurnDiv);
   };
 
   const playerName1 = document.getElementById('player1');
