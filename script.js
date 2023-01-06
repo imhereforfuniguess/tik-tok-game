@@ -143,12 +143,13 @@ const displayControl = (function displayControl() {
     }
   };
 
-  const submitButton = document.querySelector('#submitButton');
-
   const assignSubmitButtonEvent = () => {
+    const submitButton = document.querySelector('#submitButton');
     submitButton.addEventListener('click', () => {
       playerName1.remove();
       playerName2.remove();
+
+      console.log('lol');
 
       // Remove player labels
       label.forEach((e) => {
