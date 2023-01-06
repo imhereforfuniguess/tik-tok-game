@@ -90,9 +90,9 @@ const displayControl = (function displayControl() {
     turnPanel.appendChild(displayTurnDiv);
   };
 
-  const playerName1 = document.getElementById('player1');
-  const playerName2 = document.getElementById('player2');
-  const label = document.querySelectorAll('label');
+  let playerName1 = document.getElementById('player1');
+  let playerName2 = document.getElementById('player2');
+  let label = document.querySelectorAll('label');
 
   const displayVersusNames = (e) => {
     const versus = document.createElement('div');
@@ -145,11 +145,12 @@ const displayControl = (function displayControl() {
 
   const assignSubmitButtonEvent = () => {
     const submitButton = document.querySelector('#submitButton');
+    playerName1 = document.getElementById('player1');
+    playerName2 = document.getElementById('player2');
+    label = document.querySelectorAll('label');
     submitButton.addEventListener('click', () => {
       playerName1.remove();
       playerName2.remove();
-
-      console.log('lol');
 
       // Remove player labels
       label.forEach((e) => {
