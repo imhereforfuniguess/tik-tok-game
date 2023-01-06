@@ -11,15 +11,6 @@ let checkSum = 0;
 let player1Score = 0;
 let player2Score = 0;
 
-const initializeGame = () => {
-  isFirstNameFirst = 0;
-  isGameActive = 1;
-  board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  checkSum = 0;
-  player1Score = 0;
-  player2Score = 0;
-};
-
 const displayControl = (function displayControl() {
   const spawnResetBoardButton = () => {
     const resetGameButton = document.createElement('button');
@@ -151,43 +142,47 @@ const displayControl = (function displayControl() {
   };
 
   const submitButton = document.querySelector('#submitButton');
-  submitButton.addEventListener('click', () => {
-    playerName1.remove();
-    playerName2.remove();
 
-    // Remove player labels
-    label.forEach((e) => {
-      e.remove();
-    });
-    submitButton.remove();
+  const assignSubmitButton = () => {
+    submitButton.addEventListener('click', () => {
+      playerName1.remove();
+      playerName2.remove();
 
-    const turnPrompt = document.createElement('div');
-    const turnSelector1 = document.createElement('button');
-    const turnSelector2 = document.createElement('button');
-    turnSelector1.setAttribute('data-button', 'turnSelector');
-    turnSelector2.setAttribute('data-button', 'turnSelector');
-    turnSelector1.textContent = `${playerName1.value}`;
-    turnSelector2.textContent = `${playerName2.value}`;
-    turnPrompt.textContent = 'who goes first?';
-    statusPanel.appendChild(turnPrompt);
-    statusPanel.appendChild(turnSelector1);
-    statusPanel.appendChild(turnSelector2);
+      // Remove player labels
+      label.forEach((e) => {
+        e.remove();
+      });
+      submitButton.remove();
 
-    const turnSelectors = document.querySelectorAll(
-      '[data-button="turnSelector"]',
-    );
-    turnSelectors.forEach((e) => {
-      e.addEventListener('click', () => {
-        displayVersusNames(e);
-        turnSelector2.remove();
-        turnSelector1.remove();
-        turnPrompt.remove();
-        spawnBoard();
-        spawnResetBoardButton();
-        displayVersusScore();
+      const turnPrompt = document.createElement('div');
+      const turnSelector1 = document.createElement('button');
+      const turnSelector2 = document.createElement('button');
+      turnSelector1.setAttribute('data-button', 'turnSelector');
+      turnSelector2.setAttribute('data-button', 'turnSelector');
+      turnSelector1.textContent = `${playerName1.value}`;
+      turnSelector2.textContent = `${playerName2.value}`;
+      turnPrompt.textContent = 'who goes first?';
+      statusPanel.appendChild(turnPrompt);
+      statusPanel.appendChild(turnSelector1);
+      statusPanel.appendChild(turnSelector2);
+
+      const turnSelectors = document.querySelectorAll(
+        '[data-button="turnSelector"]',
+      );
+      turnSelectors.forEach((e) => {
+        e.addEventListener('click', () => {
+          displayVersusNames(e);
+          turnSelector2.remove();
+          turnSelector1.remove();
+          turnPrompt.remove();
+          spawnBoard();
+          spawnResetBoardButton();
+          displayVersusScore();
+        });
       });
     });
-  });
+  };
+  assignSubmitButton();
 
   return {
     displayTurn,
@@ -201,6 +196,7 @@ const displayControl = (function displayControl() {
     spawnInputFields,
     deleteEverything,
     spawnInputButton,
+    assignSubmitButton,
   };
 }());
 
@@ -289,6 +285,14 @@ const gameState = (function gameState() {
   // Have to start from opposite player cause you change even at first turn
   let currentPlayer = 0;
 
+  const initializeGame = () => {
+    isFirstNameFirst = 0;
+    isGameActive = 1;
+    board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    checkSum = 0;
+    player1Score = 0;
+    player2Score = 0;
+  };
   // Change player update interface to reflect that
   const changeTurn = () => {
     if (currentPlayer === 1) {
@@ -379,6 +383,7 @@ const gameState = (function gameState() {
     displayControl.deleteEverything();
     displayControl.spawnInputButton();
     initializeGame();
+    displayControl.assignSubmitButton();
 
     // reset board and reset all the labels
   };
