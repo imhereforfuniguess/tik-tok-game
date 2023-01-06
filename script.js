@@ -53,7 +53,7 @@ const displayControl = (function displayControl() {
     inputForm.appendChild(player2Input);
   };
 
-  const spawnInputButton = () => {
+  const spawnSubmitButton = () => {
     const inputButton = document.createElement('button');
     const inputButtonHolder = document.querySelector('.buttonHolder');
 
@@ -63,7 +63,7 @@ const displayControl = (function displayControl() {
 
     inputButtonHolder.appendChild(inputButton);
   };
-  spawnInputButton();
+  spawnSubmitButton();
   spawnInputFields();
   const displayTurnDiv = document.createElement('div');
   displayTurnDiv.setAttribute('class', 'turnDisplay');
@@ -128,14 +128,16 @@ const displayControl = (function displayControl() {
     scoreBoard.remove();
     const turnDisplay = document.querySelector('.turnDisplay');
     turnDisplay.remove();
-    if (document.querySelector('.roundEndMessage') === true) {
-      const roundEndMessage = document.querySelector('.roundEndMessage') === true;
+
+    if (document.querySelector('.roundEndMessage') !== null) {
+      const roundEndMessage = document.querySelector('.roundEndMessage');
       roundEndMessage.remove();
     }
 
     const resetGameButton = document.querySelector('button');
     resetGameButton.remove();
-    if (document.querySelector('.nextRoundButton') === true) {
+
+    if (document.querySelector('.nextRoundButton') !== null) {
       const nextRoundButton = document.querySelector('.nextRoundButton');
       nextRoundButton.remove();
     }
@@ -143,7 +145,7 @@ const displayControl = (function displayControl() {
 
   const submitButton = document.querySelector('#submitButton');
 
-  const assignSubmitButton = () => {
+  const assignSubmitButtonEvent = () => {
     submitButton.addEventListener('click', () => {
       playerName1.remove();
       playerName2.remove();
@@ -182,7 +184,7 @@ const displayControl = (function displayControl() {
       });
     });
   };
-  assignSubmitButton();
+  assignSubmitButtonEvent();
 
   return {
     displayTurn,
@@ -195,8 +197,8 @@ const displayControl = (function displayControl() {
     spawnNextRoundButton,
     spawnInputFields,
     deleteEverything,
-    spawnInputButton,
-    assignSubmitButton,
+    spawnSubmitButton,
+    assignSubmitButtonEvent,
   };
 }());
 
@@ -381,9 +383,9 @@ const gameState = (function gameState() {
     checkSum = 0;
     displayControl.spawnInputFields();
     displayControl.deleteEverything();
-    displayControl.spawnInputButton();
+    displayControl.spawnSubmitButton();
     initializeGame();
-    displayControl.assignSubmitButton();
+    displayControl.assignSubmitButtonEvent();
 
     // reset board and reset all the labels
   };
