@@ -10,6 +10,7 @@ let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 let checkSum = 0;
 let player1Score = 0;
 let player2Score = 0;
+let isItNotFirstGame = -1;
 
 const displayControl = (function displayControl() {
   const spawnResetBoardButton = () => {
@@ -179,12 +180,16 @@ const displayControl = (function displayControl() {
           turnSelector2.remove();
           turnSelector1.remove();
           turnPrompt.remove();
-          spawnBoard();
+
+          if (isItNotFirstGame === 0) {
+            spawnBoard();
+          }
           spawnResetBoardButton();
           displayVersusScore();
         });
       });
     });
+    isItNotFirstGame += 1;
   };
   assignSubmitButtonEvent();
 
