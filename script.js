@@ -91,10 +91,6 @@ const displayControl = (function displayControl() {
     turnPanel.appendChild(displayTurnDiv);
   };
 
-  let playerName1 = document.getElementById('player1');
-  let playerName2 = document.getElementById('player2');
-  let label = document.querySelectorAll('label');
-
   const displayVersusNames = (e) => {
     const versus = document.createElement('div');
     versus.setAttribute('class', 'versusNames');
