@@ -11,6 +11,8 @@ let checkSum = 0;
 let player1Score = 0;
 let player2Score = 0;
 let isItNotFirstGame = -1;
+let playerName1 = 'Dog';
+let playerName2 = 'Bob';
 
 const displayControl = (function displayControl() {
   const spawnResetBoardButton = () => {
