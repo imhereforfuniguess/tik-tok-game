@@ -276,10 +276,6 @@ const gameBoard = (function gameBoard() {
   };
 
   const removeBoard = () => {
-    const gameBoardDisplay = document.querySelector(
-      '[data-div="gameBoardDisplay"]',
-    );
-
     for (let i = 0; i < 9; i += 1) {
       const cellDisplay = document.querySelector('.cellDisplay');
       cellDisplay.remove();
@@ -287,8 +283,8 @@ const gameBoard = (function gameBoard() {
       cell.remove();
     }
 
-    gameBoardDisplay.remove();
-    console.log('lol remove board');
+    const gameBoardRemoved = document.querySelector('[data-div="gameBoard"]');
+    gameBoardRemoved.remove();
   };
 
   return {
@@ -402,7 +398,6 @@ const gameState = (function gameState() {
 
   const resetGame = () => {
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    gameBoard.updateBoard();
     isGameActive = 1;
     checkSum = 0;
     displayControl.spawnInputFields();
@@ -410,6 +405,7 @@ const gameState = (function gameState() {
     displayControl.spawnSubmitButton();
     initializeGame();
     displayControl.assignSubmitButtonEvent();
+    isItNotFirstGame = 0;
 
     // reset board and reset all the labels
   };
