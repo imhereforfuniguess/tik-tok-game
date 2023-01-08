@@ -136,6 +136,8 @@ const displayControl = (function displayControl() {
     const resetGameButton = document.querySelector('button');
     resetGameButton.remove();
 
+    gameBoard.removeBoard();
+
     if (document.querySelector('.nextRoundButton') !== null) {
       const nextRoundButton = document.querySelector('.nextRoundButton');
       nextRoundButton.remove();
@@ -273,10 +275,27 @@ const gameBoard = (function gameBoard() {
     assignCellsEvents();
   };
 
+  const removeBoard = () => {
+    const gameBoardDisplay = document.querySelector(
+      '[data-div="gameBoardDisplay"]',
+    );
+
+    for (let i = 0; i < 9; i += 1) {
+      const cellDisplay = document.querySelector('.cellDisplay');
+      cellDisplay.remove();
+      const cell = document.querySelector('.cell');
+      cell.remove();
+    }
+
+    gameBoardDisplay.remove();
+    console.log('lol remove board');
+  };
+
   return {
     updateBoard,
     spawnBoard,
     assignCellsEvents,
+    removeBoard,
 
   };
 }());
